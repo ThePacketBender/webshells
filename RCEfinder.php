@@ -201,7 +201,7 @@ function stdout($cmd) {
 echo	'</div>';
 }
 print(stdout());
-echo '<br/';
+echo '<br/>';
 if ($_GET[$pinfo]=pinfo) {
 	echo phpinfo();
 }
